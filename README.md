@@ -180,9 +180,7 @@ services:
 
 ### 2. 安装 Docker🐳
 
-NAS一般已自带，无需再次安装，可直接看教程第三部分。
-
-Linux服务器安装：
+安装命令：
 
 ```bash
 curl -fsSL https://get.docker.com | bash
