@@ -1,30 +1,27 @@
 # Docker版弹幕danmu_api图文部署教程（面板安装版）
 
----
-
 ## 一、准备环境
 
 ### 1. 服务器要求
 
-- Linux服务器/NAS/VPS  
-- 可访问公网网络  
-- 已开放部署端口  
+- Linux服务器/NAS/VPS
+- 可访问公网网络
+- 已开放部署端口（9321）
 
 ### 2. 安装 Docker（NAS一般已自带，无需再次安装）
 
-#### 安装 Docker
+安装 Docker
 
 ```bash
 curl -fsSL https://get.docker.com | bash
 ```
 
-#### 验证安装
+验证安装
 
 ```bash
 docker -v
 ```
-
----
+执行后提示：Docker version xx.x.x, build xxxxxxx，表示安装成功。
 
 ## 二、安装管理面板
 
@@ -36,9 +33,7 @@ docker -v
 
 ![nas面板展示](images/step-1.png)
 
----
-
-## 三、容器创建教程（以飞牛OS为例，其他面板安装步骤类似）
+## 三、创建danmu_api容器（以飞牛OS为例，其他面板安装步骤类似）
 
 ### 1. 进入创建compose页面
 
@@ -73,9 +68,7 @@ services:
 
 ![构建镜像](images/step-4.png)
 
----
-
-## 四、配置面板的管理员权限
+## 四、配置danmu_api面板的管理员权限
 
 ### 1. 打开.env配置文件
 
@@ -89,7 +82,7 @@ services:
 
 ![配置ADMIN_TOKEN](images/step-6.png)
 
-## 五、访问 API
+## 五、访问danmu_api
 
 ### 1. 浏览器访问
 
@@ -109,9 +102,7 @@ http://服务器IP:9321/ADMIN_TOKEN
 
 ![API测试](images/step-7.png)
 
----
-
-## 六、容器自动更新教程
+## 六、danmu_api容器自动更新教程
 
 安装Watchtower容器，实现自动监控更新。按照图片内标注的顺序，填写相关配置。其中，项目名称可以自定义想要的内容，路径可自由选择想保存的位置，docker-compose请直接复制粘贴下方提供的内容。配置完成后直接点击确认，然后点击构建镜像按钮即可。
 ![Watchtower安装步骤](images/step-8.png)
@@ -134,14 +125,10 @@ services:
       - danmu-api         # 监控的目标容器名
 ```
 
----
-
-## 七、卸载容器
+## 七、卸载danmu_api
 
 直接在面板点击删除，即可完整卸载容器。
 ![卸载容器](images/step-9.png)
-
----
 
 ## 八、常见问题
 
