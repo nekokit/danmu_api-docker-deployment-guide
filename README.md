@@ -170,13 +170,18 @@ services:
 
 # Docker版弹幕danmu_api部署教程（命令行安装版）🎉
 
-## 一、服务器要求🖥️
+## 一、准备环境
+
+### 1. 服务器要求🖥️
 
 - Linux服务器/NAS/VPS
 - 可访问公网网络
 - 已开放部署端口（9321）
 
-## 二、安装docker🐳
+### 2. 安装 Docker🐳
+
+NAS一般已自带，无需再次安装，可直接看教程第三部分。
+
 Linux服务器安装：
 
 ```bash
@@ -190,7 +195,7 @@ docker -v
 ```
 输出示例：Docker version xx.x.x, build xxxxxxx，表示安装成功。
 
-## 三、创建danmu_api容器📦
+## 二、创建danmu_api容器📦
 
 ### 1.拉取镜像：
 ```
@@ -203,7 +208,7 @@ docker pull logvar/danmu-api:latest
 docker run -d -p 9321:9321 --name danmu-api -v $(pwd)/config:/app/config --env-file .env logvar/danmu-api:latest
 ```
 
-## 四、创建danmu_api容器📦（docker-compose版）
+## 三、创建danmu_api容器📦（docker-compose版）
 
 ### 1.创建项目目录
 ```
