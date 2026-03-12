@@ -8,32 +8,36 @@
 - 可访问公网网络
 - 已开放部署端口（9321）
 
-### 2. 安装 Docker（NAS一般已自带，无需再次安装）
+### 2. 安装 Docker
 
-安装 Docker
+NAS一般已自带，无需再次安装，可直接看教程第三部分。
+
+Linux服务器安装：
 
 ```bash
 curl -fsSL https://get.docker.com | bash
 ```
 
-验证安装
+验证安装：
 
 ```bash
 docker -v
 ```
-执行后提示：Docker version xx.x.x, build xxxxxxx，表示安装成功。
+输出示例：Docker version xx.x.x, build xxxxxxx，表示安装成功。
 
 ## 二、安装管理面板
 
-### 1. Linux服务器/VPS 用户推荐安装1panel面板
+### 1. Linux服务器/VPS
 
-[1panel官方安装教程](https://1panel.cn/docs/v2/installation/online_installation)
+推荐使用 1panel 面板，[1panel官方安装教程](https://1panel.cn/docs/v2/installation/online_installation)
 
-### 2. NAS用户可直接使用自带的管理面板
+### 2. NAS用户
+
+可直接使用自带的管理面板
 
 ![nas面板展示](images/step-1.png)
 
-## 三、创建danmu_api容器（以飞牛OS为例，其他面板安装步骤类似）
+## 三、创建danmu_api容器（以飞牛OS为例）
 
 ### 1. 进入创建compose页面
 
@@ -41,7 +45,11 @@ docker -v
 
 ### 2. 填写相关配置
 
-按照图片内标注的顺序，填写相关配置。其中，项目名称可以自定义想要的内容，路径可自由选择想保存的位置，docker-compose请直接复制粘贴下方提供的内容。全部配置完成后直接点击确认。
+•	项目名称可自定义
+  
+•	路径可自定义
+  
+•	docker-compose.yml请直接复制粘贴下面提供的内容：
 
 ![填写相关配置](images/step-3.png)
 
@@ -64,21 +72,23 @@ services:
 
 ### 3. 构建镜像
 
-直接点击构建镜像按钮即可。
+直接点击**构建**按钮即可。
 
 ![构建镜像](images/step-4.png)
 
-## 四、配置danmu_api面板的管理员权限
+## 四、配置管理员权限
 
 ### 1. 打开.env配置文件
 
-根据前面配置的路径，找到.env配置文件，并打开。
+路径为前面挂载的 config 目录下。
 
 ![打开.env配置文件](images/step-5.png)
 
 ### 2. 配置ADMIN_TOKEN
 
-删除ADMIN_TOKEN前面的#，在=后填写想要配置的值
+•	删除行首的 #
+
+•	在 = 后填写自定义值
 
 ![配置ADMIN_TOKEN](images/step-6.png)
 
@@ -86,25 +96,27 @@ services:
 
 ### 1. 浏览器访问
 
-使用下面格式的地址即可访问到普通权限的danmu_api：
+•	普通权限：
 ```
 http://服务器IP:9321/TOKEN
 ```
 
-使用下面格式的地址即可访问到管理员权限的danmu_api：
+•	管理员权限：
 ```
 http://服务器IP:9321/ADMIN_TOKEN
 ```
 
 ### 2. API测试
 
-切换到接口调试菜单，选择搜索动漫接口，输入想要搜索的关键词，点击发送请求。下方的响应结果内能正确显示搜索的内容，说明项目配置正确。
+切换到接口调试菜单 → 选择“搜索动漫接口” → 输入关键词 → 点击发送请求 → 查看响应结果。
+
+下方的响应结果内能正确显示搜索的内容，说明项目部署完毕，可正常使用。
 
 ![API测试](images/step-7.png)
 
-## 六、danmu_api容器自动更新教程
+## 六、自动更新容器（可选）
 
-安装Watchtower容器，实现自动监控更新。按照图片内标注的顺序，填写相关配置。其中，项目名称可以自定义想要的内容，路径可自由选择想保存的位置，docker-compose请直接复制粘贴下方提供的内容。配置完成后直接点击确认，然后点击构建镜像按钮即可。
+引入 Watchtower 容器，实现镜像自动更新，安装步骤与上面同理：
 ![Watchtower安装步骤](images/step-8.png)
 
 docker-compose配置文件：
@@ -125,9 +137,9 @@ services:
       - danmu-api         # 监控的目标容器名
 ```
 
-## 七、卸载danmu_api
+## 七、卸载容器
 
-直接在面板点击删除，即可完整卸载容器。
+如需卸载，直接在面板点击删除，即可完整卸载容器。
 ![卸载容器](images/step-9.png)
 
 ## 八、常见问题
@@ -142,7 +154,7 @@ services:
 
 ### 2.搜索结果缺集
 
-缺集的情况：
+搜索结果缺集可以考虑检查以下两个方面：
 
 ① 默认配置的源是360,vod,renren,hanjutv四个，其中360和VOD等采集站不一定采集了全集，请添加官方源（tencent,youku,iqiyi,imgo,bilibili,migu,sohu,leshi,xigua,maiduidui,renren,hanjutv,bahamut,dandan,animeko）或douban源后重新尝试。
 
@@ -150,6 +162,6 @@ services:
 
 ### 3. 巴哈姆特弹幕获取失败
 
-① 巴哈姆特需要能够访问国外的网络环境，请使用PROXY_URL变量配置网络代理。
+① 巴哈姆特需要能够访问国外的网络环境，国内服务器请使用PROXY_URL变量配置网络代理。
 
 ② 巴哈姆特源的标题可能与国内的不同，请配置TMDB_API_KEY变量，可以帮助巴哈姆特源进行日语原名搜索，提高成功率。
