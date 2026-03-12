@@ -1,14 +1,14 @@
-# Docker版弹幕danmu_api图文部署教程（面板安装版）
+# Docker版弹幕danmu_api图文部署教程（面板安装版）🎉
 
 ## 一、准备环境
 
-### 1. 服务器要求
+### 1. 服务器要求🖥️
 
 - Linux服务器/NAS/VPS
 - 可访问公网网络
 - 已开放部署端口（9321）
 
-### 2. 安装 Docker
+### 2. 安装 Docker🐳
 
 NAS一般已自带，无需再次安装，可直接看教程第三部分。
 
@@ -25,7 +25,7 @@ docker -v
 ```
 输出示例：Docker version xx.x.x, build xxxxxxx，表示安装成功。
 
-## 二、安装管理面板
+## 二、安装管理面板🛠️
 
 ### 1. Linux服务器/VPS
 
@@ -37,7 +37,7 @@ docker -v
 
 ![nas面板展示](images/step-1.png)
 
-## 三、创建danmu_api容器（以飞牛OS为例）
+## 三、创建danmu_api容器📦（以飞牛OS为例）
 
 ### 1. 进入创建compose页面
 
@@ -76,7 +76,7 @@ services:
 
 ![构建镜像](images/step-4.png)
 
-## 四、配置管理员权限
+## 四、配置管理员权限🔑
 
 ### 1. 打开.env配置文件
 
@@ -92,7 +92,7 @@ services:
 
 ![配置ADMIN_TOKEN](images/step-6.png)
 
-## 五、访问danmu_api
+## 五、访问danmu_api🌐
 
 ### 1. 浏览器访问
 
@@ -114,7 +114,7 @@ http://服务器IP:9321/ADMIN_TOKEN
 
 ![API测试](images/step-7.png)
 
-## 六、自动更新容器（可选）
+## 六、自动更新容器🎯
 
 引入 Watchtower 容器，实现镜像自动更新，安装步骤与上面同理：
 ![Watchtower安装步骤](images/step-8.png)
@@ -137,12 +137,12 @@ services:
       - danmu-api         # 监控的目标容器名
 ```
 
-## 七、卸载容器
+## 七、卸载容器🗑️
 
 如需卸载，直接在面板点击删除，即可完整卸载容器。
 ![卸载容器](images/step-9.png)
 
-## 八、常见问题
+## 八、常见问题（FAQ）❓
 
 ### 1. 弹幕匹配错
 
@@ -165,3 +165,74 @@ services:
 ① 巴哈姆特需要能够访问国外的网络环境，国内服务器请使用PROXY_URL变量配置网络代理。
 
 ② 巴哈姆特源的标题可能与国内的不同，请配置TMDB_API_KEY变量，可以帮助巴哈姆特源进行日语原名搜索，提高成功率。
+
+
+
+# Docker版弹幕danmu_api部署教程（命令行安装版）🎉
+
+## 一、服务器要求🖥️
+
+- Linux服务器/NAS/VPS
+- 可访问公网网络
+- 已开放部署端口（9321）
+
+## 二、安装docker🐳
+Linux服务器安装：
+
+```bash
+curl -fsSL https://get.docker.com | bash
+```
+
+验证安装：
+
+```bash
+docker -v
+```
+输出示例：Docker version xx.x.x, build xxxxxxx，表示安装成功。
+
+## 三、创建danmu_api容器📦
+
+### 1.拉取镜像：
+```
+docker pull logvar/danmu-api:latest
+```
+
+### 2.运行容器：
+执行此命令后会挂载config/.env，可以直接打开.env文件修改配置，修改后无需重启容器，自动热重载。
+```
+docker run -d -p 9321:9321 --name danmu-api -v $(pwd)/config:/app/config --env-file .env logvar/danmu-api:latest
+```
+
+## 四、创建danmu_api容器📦（docker-compose版）
+
+### 1.创建项目目录
+```
+mkdir -p ~/danmu_api
+cd ~/danmu_api
+```
+
+### 2.创建 docker-compose.yml
+```
+nano docker-compose.yml
+```
+写入以下内容：
+```yaml
+services:
+  danmu-api:
+    image: logvar/danmu-api:latest
+    container_name: danmu-api
+    restart: always
+    network_mode: bridge
+    ports:
+      - 9321:9321
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./config:/app/config  # 挂载config目录后，会自动在config目录下创建.env配置文件
+      - ./cache:/app/.cache   # 挂载.chche目录后，会将缓存实时保存在本地文件，无需再配置redis
+```
+
+### 3.启动容器
+```
+docker compose up -d
+```
