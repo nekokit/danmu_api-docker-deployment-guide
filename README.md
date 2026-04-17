@@ -193,7 +193,7 @@ docker -v
 ```
 输出示例：Docker version xx.x.x, build xxxxxxx，表示安装成功。
 
-## 二、创建danmu_api容器📦
+## 二、创建danmu_api容器📦（一键启动命令）
 
 ### 1.拉取镜像：
 ```
@@ -206,7 +206,7 @@ docker pull logvar/danmu-api:latest
 docker run -d -p 9321:9321 --name danmu-api -v $(pwd)/config:/app/config --env-file .env logvar/danmu-api:latest
 ```
 
-## 三、创建danmu_api容器📦（docker-compose版）
+## 三、创建danmu_api容器📦（通过docker-compose安装）
 
 ### 1.创建项目目录
 ```
