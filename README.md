@@ -10,20 +10,17 @@
 
 ### 2. 安装 Docker🐳
 
-NAS一般已自带，无需再次安装，可直接看教程第三部分。
-
+NAS一般已自带，无需再次安装，可直接看教程第三部分  
 Linux服务器安装：
-
 ```bash
 curl -fsSL https://get.docker.com | bash
 ```
 
 验证安装：
-
 ```bash
 docker -v
 ```
-输出示例：Docker version xx.x.x, build xxxxxxx，表示安装成功。
+输出示例：Docker version xx.x.x, build xxxxxxx，表示安装成功
 
 ## 二、安装管理面板🛠️
 
@@ -34,7 +31,6 @@ docker -v
 ### 2. NAS用户
 
 可直接使用自带的管理面板
-
 ![nas面板展示](images/step-1.png)
 
 ## 三、创建danmu_api容器📦（以飞牛OS为例）
@@ -45,10 +41,8 @@ docker -v
 
 ### 2. 填写相关配置
 
-•	项目名称可自定义
-  
-•	路径可自定义
-  
+•	项目名称可自定义  
+•	路径可自定义  
 •	docker-compose.yml请直接复制粘贴下面提供的内容：
 
 ![填写相关配置](images/step-3.png)
@@ -72,8 +66,7 @@ services:
 
 ### 3. 构建镜像
 
-直接点击**构建**按钮即可。
-
+直接点击**构建**按钮即可
 ![构建镜像](images/step-4.png)
 
 ## 四、配置管理员权限🔑
@@ -81,15 +74,12 @@ services:
 ### 1. 打开.env配置文件
 
 第一次安装本容器，会在挂载的 config 目录下自动生成一份.env配置文件
-
 ![打开.env配置文件](images/step-5.png)
 
 ### 2. 配置ADMIN_TOKEN
 
-•	删除行首的 #
-
+•	删除行首的 #  
 •	在 = 后填写自定义值
-
 ![配置ADMIN_TOKEN](images/step-6.png)
 
 ## 五、访问danmu_api🌐
@@ -100,7 +90,6 @@ services:
 ```
 http://服务器IP:9321/TOKEN
 ```
-
 •	管理员权限：
 ```
 http://服务器IP:9321/ADMIN_TOKEN
@@ -108,10 +97,8 @@ http://服务器IP:9321/ADMIN_TOKEN
 
 ### 2. API测试
 
-切换到接口调试菜单 → 选择“搜索动漫接口” → 输入关键词 → 点击发送请求 → 查看响应结果。
-
-下方的响应结果内能正确显示搜索的内容，说明项目部署完毕，可正常使用。
-
+切换到接口调试菜单 → 选择“搜索动漫接口” → 输入关键词 → 点击发送请求 → 查看响应结果  
+下方的响应结果内能正确显示搜索的内容，说明项目部署完毕，可正常使用
 ![API测试](images/step-7.png)
 
 ## 六、自动更新容器🎯
@@ -139,59 +126,45 @@ services:
 
 ## 七、卸载容器🗑️
 
-如需卸载，直接在面板点击删除，即可完整卸载容器。
+如需卸载，直接在面板点击删除，即可完整卸载容器
 ![卸载容器](images/step-9.png)
 
 ## 八、常见问题（FAQ）❓
 
 ### 1. 弹幕匹配错
-
-弹幕匹配错可以考虑以下两种方案：
-
-① 使用剧名映射表TITLE_MAPPING_TABLE，用于自动匹配时替换标题进行搜索，格式：原始标题->映射标题;原始标题->映射标题;... ，例如："唐朝诡事录->唐朝诡事录之西行;国色芳华->锦绣芳华"。
-
-② 打开记住手动选择结果环境变量REMEMBER_LAST_SELECT。
+弹幕匹配错可以考虑以下两种方案：  
+① 使用剧名映射表TITLE_MAPPING_TABLE，用于自动匹配时替换标题进行搜索，格式：原始标题->映射标题;原始标题->映射标题;... ，例如："唐朝诡事录->唐朝诡事录之西行;国色芳华->锦绣芳华"  
+② 打开记住手动选择结果环境变量REMEMBER_LAST_SELECT
 
 ### 2.搜索结果缺集
-
-搜索结果缺集可以考虑检查以下两个方面：
-
-① 默认配置的源是360,vod,renren,hanjutv四个，其中360和VOD等采集站不一定采集了全集，请添加官方源（tencent,youku,iqiyi,imgo,bilibili,migu,sohu,leshi,xigua,maiduidui,renren,hanjutv,bahamut,dandan,animeko）或douban源后重新尝试。
-
-② 请确认是否开启了ENABLE_EPISODE_FILTER手动搜索集标题过滤开关，以及EPISODE_TITLE_FILTER环境变量中有没有过滤关键字匹配到了集标题。
+搜索结果缺集可以考虑检查以下两个方面：  
+① 默认配置的源是360,vod,renren,hanjutv四个，其中360和VOD等采集站不一定采集了全集，请添加官方源（tencent,youku,iqiyi,imgo,bilibili,migu,sohu,leshi,xigua,maiduidui,renren,hanjutv,bahamut,dandan,animeko）或douban源后重新尝试  
+② 请确认是否开启了ENABLE_EPISODE_FILTER手动搜索集标题过滤开关，以及EPISODE_TITLE_FILTER环境变量中有没有过滤关键字匹配到了集标题
 
 ### 3. 巴哈姆特弹幕获取失败
-
-① 巴哈姆特需要能够访问国外的网络环境，国内服务器请使用PROXY_URL变量配置网络代理。
-
-② 巴哈姆特源的标题可能与国内的不同，请配置TMDB_API_KEY变量，可以帮助巴哈姆特源进行日语原名搜索，提高成功率。
-
-
+① 巴哈姆特需要能够访问国外的网络环境，国内服务器请使用PROXY_URL变量配置网络代理  
+② 巴哈姆特源的标题可能与国内的不同，请配置TMDB_API_KEY变量，可以帮助巴哈姆特源进行日语原名搜索，提高成功率
 
 # Docker版弹幕danmu_api部署教程（命令行安装版）🎉
 
 ## 一、准备环境
 
 ### 1. 服务器要求🖥️
-
 - Linux服务器/NAS/VPS
 - 可访问公网网络
 - 已开放部署端口（9321）
 
 ### 2. 安装 Docker🐳
-
 安装命令：
-
 ```bash
 curl -fsSL https://get.docker.com | bash
 ```
 
 验证安装：
-
 ```bash
 docker -v
 ```
-输出示例：Docker version xx.x.x, build xxxxxxx，表示安装成功。
+输出示例：Docker version xx.x.x, build xxxxxxx，表示安装成功
 
 ## 二、创建danmu_api容器📦（一键启动命令）
 
@@ -201,7 +174,6 @@ docker pull logvar/danmu-api:latest
 ```
 
 ### 2.运行容器：
-执行此命令后会挂载config/.env，可以直接打开.env文件修改配置，修改后无需重启容器，自动热重载。
 ```
 docker run -d -p 9321:9321 --name danmu-api -v $(pwd)/config:/app/config --env-file .env logvar/danmu-api:latest
 ```
@@ -239,3 +211,22 @@ services:
 ```
 docker compose up -d
 ```
+
+## 四、配置管理员权限🔑
+
+### 1. 打开.env配置文件
+第一次安装本容器，会在挂载的 config 目录下自动生成一份.env配置文件  
+执行下面的命令，使用nano编辑器打开.env文件
+```
+cd ~/danmu_api
+nano config/.env
+```
+
+### 2. 配置ADMIN_TOKEN
+•	删除行首的 #  
+•	在 = 后填写自定义值
+![配置ADMIN_TOKEN](images/step-6.png)
+nano编辑器的基本操作：  
+编辑：打开后直接输入即可  
+保存：Ctrl + O → 回车  
+退出：Ctrl + X
